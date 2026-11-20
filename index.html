@@ -262,6 +262,43 @@ function sortear(){
 
     participantes.forEach(function(p,i){
 
+    let linkRevelacao =
+
+    "https://marcelolopesbrj.github.io/amigo-oculto/revelar.html" +
+
+    "?nome=" +
+    encodeURIComponent(p.nome) +
+
+    "&amigo=" +
+    encodeURIComponent(sorteados[i].nome);
+
+    let mensagem =
+
+`🎁 Olá, você!!!
+
+Está preparado(a) para descobrir quem tirou no nosso amigo oculto mais gostoso de São Paulo? 😄
+
+🤫 Não vale contar para ninguém quem você tirou, viu?
+
+📅 Lembrando que nosso encontro será dia 06/12/2026, na casa da Suzi.
+
+🎁 O presente será entre R$ 100 e R$ 150.
+
+Capriche! Seja criativo(a) e aproveite esse momento delicioso com todo mundo.
+
+👇 Clique no link abaixo para descobrir quem é o seu amigo oculto:
+
+${linkRevelacao}
+
+Boa sorte! 😉`;
+
+    let whatsapp =
+
+    "https://wa.me/" +
+    p.telefone +
+    "?text=" +
+    encodeURIComponent(mensagem);
+
     html +=
 
     "<div style='margin-bottom:15px'>" +
@@ -270,8 +307,12 @@ function sortear(){
     p.nome +
     "</strong> " +
 
-    "<button>" +
+    "<button onclick=\"window.open('" +
+    whatsapp +
+    "','_blank')\">" +
+
     "📱 Enviar WhatsApp" +
+
     "</button>" +
 
     "</div>";
