@@ -264,15 +264,15 @@ function sortear(){
 
     let linkRevelacao =
 
-    "https://marcelolopesbrj.github.io/amigo-oculto/revelar.html" +
+"https://marcelolopesbrj.github.io/amigo-oculto/revelar.html" +
 
-    "?nome=" +
-    encodeURIComponent(p.nome) +
+"?nome=" +
+encodeURIComponent(p.nome) +
 
-    "&amigo=" +
-    encodeURIComponent(sorteados[i].nome);
+"&amigo=" +
+encodeURIComponent(sorteados[i].nome);
 
-    let mensagem =
+let mensagem =
 
 `🎁 Olá, você!!!
 
@@ -292,16 +292,16 @@ ${linkRevelacao}
 
 Boa sorte! 😉`;
 
-    let whatsapp =
+let whatsapp =
 
-    "https://wa.me/" +
-    p.telefone +
-    "?text=" +
-    encodeURIComponent(mensagem);
+"https://wa.me/" +
+p.telefone +
+"?text=" +
+encodeURIComponent(mensagem);
 
-    html +=
+html +=
 
-    "<div style='margin-bottom:15px'>" +
+"<div style='margin-bottom:15px'>" +
 
     "<strong>" +
     p.nome +
