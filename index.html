@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Amigo Oculto</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+    background:#f3f4f6;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:12px;
+}
+
+input, textarea{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    box-sizing:border-box;
+}
+
+button{
+    padding:10px 15px;
+    cursor:pointer;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border-bottom:1px solid #ddd;
+    padding:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🎁 Amigo Oculto</h1>
+
+<input id="evento"
+placeholder="Nome do evento">
+
+<input id="data"
+placeholder="Data">
+
+<input id="valor"
+placeholder="Valor">
+
+<textarea
+id="mensagem"
+placeholder="Mensagem"></textarea>
+
+</div>
+
+<div class="card">
+
+<h2>Participantes</h2>
+
+<input
+id="nome"
+placeholder="Nome">
+
+<input
+id="telefone"
+placeholder="WhatsApp">
+
+<button onclick="adicionar()">
+Adicionar Participante
+</button>
+
+</div>
+
+<div class="card">
+
+<p>
+Participantes:
+<span id="total">0</span>/12
+</p>
+
+<table>
+
+<thead>
+<tr>
+<th>Nome</th>
+<th>Telefone</th>
+<th>Ação</th>
+</tr>
+</thead>
+
+<tbody id="lista">
+</tbody>
+
+</table>
+
+<br>
+
+<button onclick="sortear()">
+
+🎲 Realizar Sorteio
+
+</button>
+
+<div id="resultado"></div>
+
+</div>
+
+<script>
+
+let participantes=[];
+
+function adicionar(){
+
+    const nome =
+    document.getElementById("nome").value.trim();
+
+    const telefone =
+    document.getElementById("telefone").value.trim();
+
+    if(nome==="" || telefone===""){
+
+        alert(
+        "Preencha os dois campos"
+        );
+
+        return;
+    }
+
+    if(participantes.length>=12){
+
+        alert(
+        "Limite de 12 participantes"
+        );
+
+        return;
+    }
+
+    participantes.push({
+
+        nome:nome,
+        telefone:telefone
+
+    });
+
+    atualizar();
+
+    document
+    .getElementById("nome")
+    .value="";
+
+    document
+    .getElementById("telefone")
+    .value="";
+}
+
+function excluir(indice){
+
+    participantes.splice(
+        indice,
+        1
+    );
+
+    atualizar();
+}
+
+function atualizar(){
+
+    let html="";
+
+    participantes.forEach(
+        function(p,indice){
+
+            html +=
+            "<tr>" +
+            "<td>" + p.nome + "</td>" +
+            "<td>" + p.telefone + "</td>" +
+            "<td>" +
+            "<button onclick='excluir(" +
+            indice +
+            ")'>" +
+            "Excluir" +
+            "</button>" +
+            "</td>" +
+            "</tr>";
+
+        }
+    );
+
+    document
+    .getElementById("lista")
+    .innerHTML = html;
+
+    document
+    .getElementById("total")
+    .innerText =
+    participantes.length;
+}
+
+function embaralhar(lista){
+
+    let copia = [...lista];
+
+    for(let i=copia.length-1;i>0;i--){
+
+        let j =
+        Math.floor(
+        Math.random()*(i+1)
+        );
+
+        [copia[i],copia[j]] =
+        [copia[j],copia[i]];
+    }
+
+    return copia;
+}
+
+function sortear(){
+
+    if(participantes.length < 3){
+
+        alert(
+        "Cadastre pelo menos 3 participantes."
+        );
+
+        return;
+    }
+
+    let sorteados;
+
+    do{
+
+        sorteados =
+        embaralhar(participantes);
+
+    }while(
+
+        participantes.some(
+            (p,i)=>
+            p.nome === sorteados[i].nome
+        )
+
+    );
+
+    let html =
+    "<h2>✅ Resultado do Sorteio</h2>";
+
+    participantes.forEach(function(p,i){
+
+    html +=
+
+    "<div style='margin-bottom:15px'>" +
+
+    "<strong>" +
+    p.nome +
+    "</strong> " +
+
+    "<button>" +
+    "📱 Enviar WhatsApp" +
+    "</button>" +
+
+    "</div>";
+
+});
+
+    document
+    .getElementById("resultado")
+    .innerHTML = html;
+
+}
+
+
+</script>
+
+
+</body>
+</html>
